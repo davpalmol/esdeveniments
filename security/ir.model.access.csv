@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_esdeveniments_esdeveniments,esdeveniments.esdeveniments,model_esdeveniments_esdeveniments,base.group_user,1,1,1,1
+access_esdeveniments_participants,esdeveniments.participants,model_esdeveniments_participants,base.group_user,1,1,1,1

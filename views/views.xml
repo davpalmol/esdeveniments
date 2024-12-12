@@ -1,0 +1,161 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="esdeveniments_form">
+      <field name="name">Esdeveniments formulario</field>
+      <field name="model">esdeveniments.esdeveniments</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="dataInici"/>
+              <field name="dataFinal"/>
+              <field name="lloc"/>
+              <field name="descpripcio"/>
+              <field name="duracion"/>
+              <field name="foto"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="esdeveniments_tree">
+      <field name="name">Esdeveniments Lista</field>
+      <field name="model">esdeveniments.esdeveniments</field>
+      <field name="arch" type="xml">
+          <tree>
+              <field name="name"/>
+              <field name="dataInici"/>
+              <field name="dataFinal"/>
+              <field name="lloc"/>
+              <field name="duracion"/>
+              <field name="participantes_ids"/>
+          </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="esdeveniments_kanban">
+      <field name="name">esdeveniment.kanban</field>
+      <field name="model">esdeveniments.esdeveniments</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <field name="name"/>
+          <field name="lloc"/>
+          <field name="descpripcio"/>
+          <field name="foto"/>
+          <field name="tipus"/>
+          <templates>
+            <t t-name="kanban-box">
+              <div>
+                <strong><field name="name"/></strong>
+                <div><field name="lloc"/></div>
+                <div><field name="descpripcio"/></div>
+                <div>
+                <img class="oe_kanban_image"
+                     t-att-src="'/web/image/esdeveniments.esdeveniments/' + record.id.value + '/foto'"
+                     alt="Imatge del esdeveniment"/>
+                </div>
+                <div><field name="tipus"/></div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="esdeveniments_calendar">
+      <field name="name">travel calendar</field>
+      <field name="model">esdeveniments.esdeveniments</field>
+      <field name="arch" type="xml">
+        <calendar
+                string="Calendar" date_start="dataInici"
+                          date_stop="dataFinal"
+                          color="lloc"
+        >
+        </calendar>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="participants_tree">
+      <field name="name">participants list</field>
+      <field name="model">esdeveniments.participants</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="cognom"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="esdeveniments.action_window">
+      <field name="name">esdeveniments</field>
+      <field name="res_model">esdeveniments.esdeveniments</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="esdeveniments_tree"/>
+    </record>
+
+    <record model="ir.actions.act_window" id="esdeveniments.action_window2">
+      <field name="name">participants</field>
+      <field name="res_model">esdeveniments.participants</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="participants_tree"/>
+    </record>
+
+    <record model="ir.actions.act_window" id="esdeveniments.action_window3">
+      <field name="name">kanban</field>
+      <field name="res_model">esdeveniments.esdeveniments</field>
+      <field name="view_mode">kanban,form</field>
+      <field name="view_id" ref="esdeveniments_kanban"/>
+    </record>
+
+    <record model="ir.actions.act_window" id="esdeveniments.action_window4">
+      <field name="name">calendar</field>
+      <field name="res_model">esdeveniments.esdeveniments</field>
+      <field name="view_mode">calendar,form</field>
+      <field name="view_id" ref="esdeveniments_calendar"/>
+    </record>
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="esdeveniments.action_server">
+      <field name="name">esdeveniments server</field>
+      <field name="model_id" ref="model_esdeveniments_esdeveniments"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+    <menuitem name="esdeveniments" id="esdeveniments.menu_root"/>
+    <!-- menu categories -->
+
+    <menuitem name="Gestion" id="esdeveniments.menu_1" parent="esdeveniments.menu_root"/>
+    <!-- actions -->
+
+    <menuitem name="Esdeveniments" id="esdeveniments.menu_1_list" parent="esdeveniments.menu_1"
+              action="esdeveniments.action_window"/>
+
+    <menuitem name="Participants" id="esdeveniments.menu_2_list" parent="esdeveniments.menu_1"
+              action="esdeveniments.action_window2"/>
+
+    <menuitem name="KanBan" id="esdeveniments.menu_3_list" parent="esdeveniments.menu_1"
+              action="esdeveniments.action_window3"/>
+
+    <menuitem name="Calendar" id="esdeveniments.menu_4_list" parent="esdeveniments.menu_1"
+              action="esdeveniments.action_window4"/>
+
+
+
+  </data>
+</odoo>
